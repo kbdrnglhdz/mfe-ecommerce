@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="importmap-type" content="systemjs-importmap">
+  <title>Microfrontends App</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="navbar-container"></div>
+  <div id="single-spa-layout">
+    <main>
+      <section data-route-param="path"></section>
+    </main>
+  </div>
+
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "react": "https://cdn.jsdelivr.net/npm/react@17.0.2/umd/react.production.min.js",
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.production.min.js",
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.3/lib/system/single-spa.min.js",
+        <% if (isLocal) { %>
+        "@ORG_NAME/root-config": "//localhost:9000/ORG_NAME-root-config.js"
+        <% } else { %>
+        "@ORG_NAME/root-config": "https://cdn.example.com/root-config/latest/ORG_NAME-root-config.js"
+        <% } %>
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
+
+  <script>
+    System.import("@ORG_NAME/root-config");
+  </script>
+
+  <import-map-overrides-full></import-map-overrides-full>
+</body>
+</html>

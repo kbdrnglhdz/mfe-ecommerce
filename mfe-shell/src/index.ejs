@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="importmap-type" content="systemjs-importmap">
+  <title>Mini E-commerce</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="navbar-container"></div>
+  <div id="app-container"></div>
+
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "react": "https://cdn.jsdelivr.net/npm/react@17.0.2/umd/react.production.min.js",
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.production.min.js",
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.3/lib/system/single-spa.min.js",
+        <% if (isLocal) { %>
+        "@ecommerce/shell": "//localhost:9000/ecommerce-shell.js",
+        "@ecommerce/catalog": "//localhost:8501/ecommerce-catalog.js",
+        "@ecommerce/checkout": "//localhost:8502/ecommerce-checkout.js"
+        <% } else { %>
+        "@ecommerce/shell": "https://cdn.example.com/shell/latest/ecommerce-shell.js",
+        "@ecommerce/catalog": "https://cdn.example.com/catalog/latest/ecommerce-catalog.js",
+        "@ecommerce/checkout": "https://cdn.example.com/checkout/latest/ecommerce-checkout.js"
+        <% } %>
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
+
+  <script>
+    System.import("@ecommerce/shell");
+  </script>
+
+  <import-map-overrides-full></import-map-overrides-full>
+</body>
+</html>
